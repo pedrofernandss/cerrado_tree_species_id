@@ -1,5 +1,3 @@
-Here's your updated README with **CUDA setup instructions** included in a dedicated section:
-
 # 🌳 Cerrado Tree Identification
 
 Welcome to the **cerrado-tree-id** project!
