@@ -29,6 +29,7 @@ source your_env/bin/activate
 * Install `exiftool` for extracting image metadata:
 
 ```bash
+sudo apt update && sudo apt upgrade 
 sudo apt install libimage-exiftool-perl
 ```
 
