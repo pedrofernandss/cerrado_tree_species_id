@@ -5,7 +5,7 @@ Welcome to the **cerrado-tree-id** project!
 This repository introduces a novel **image preprocessing pipeline** that fuses multispectral images, tailored for native species of the Cerrado biome.  
 Using our local dataset, the models provided in `detect/models` can detect **over 16 different species** — feel free to use them as you like!
 
-Our pipeline delivers a **3.0% improvement in detection accuracy** compared to state-of-the-art RGB-only approaches.
+Our pipeline delivers a **4.2% improvement in detection accuracy** compared to state-of-the-art RGB-only approaches.
 
 > ⚠️ **Note:** Running the preprocessing notebooks requires a machine with a **GPU** for efficient processing.
 
