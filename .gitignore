@@ -152,6 +152,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*vscode
 
 # Spyder project settings
 .spyderproject
@@ -189,3 +190,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Resultados do YOLO (Pesos, Predições e Logs locais)
+runs/
+
+# Experiment tracking with MLflow
+mlruns/
+reports/
