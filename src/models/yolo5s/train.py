@@ -35,15 +35,8 @@ def train_and_validate():
         mlflow.end_run()
 
     with mlflow.start_run(run_name=args.name):
-        #model_path = os.path.join(project_root, "models", "yolov5n.pt")
-        model = YOLO("yolov5s.pt")
-
-        # mlflow.log_params({
-        #     "dataset": args.name,
-        #     "imgsz": args.imgsz,
-        #     "batch": args.batch,
-        #     "epochs": args.epochs,
-        # })
+        model_path = os.path.join(project_root, "models", "yolov5su.pt")
+        model = YOLO(model_path)
 
         if args.tags:
             tags_list = args.tags.split(',')
