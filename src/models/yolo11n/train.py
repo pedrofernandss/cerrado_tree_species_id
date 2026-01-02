@@ -18,7 +18,7 @@ def train_and_validate():
     parser.add_argument('--name', type=str, required=True, help='Unique run name')
     parser.add_argument('--tags', type=str, help='Tags')
     parser.add_argument('--patience', type=int, default=30, help='Early stopping')
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=150)
     parser.add_argument('--batch', type=int, default=8)
     parser.add_argument('--imgsz', type=int, default=1000)
     args = parser.parse_args()
@@ -37,13 +37,6 @@ def train_and_validate():
     with mlflow.start_run(run_name=args.name):
         model_path = os.path.join(project_root, "models", "yolo11n.pt")
         model = YOLO(model_path)
-
-        # mlflow.log_params({
-        #     "dataset": args.name,
-        #     "imgsz": args.imgsz,
-        #     "batch": args.batch,
-        #     "epochs": args.epochs,
-        # })
 
         if args.tags:
             tags_list = args.tags.split(',')
