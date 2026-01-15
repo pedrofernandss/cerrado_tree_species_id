@@ -133,3 +133,58 @@ def _edge_detection(image):
     magnitude = cv2.magnitude(grad_x, grad_y)
     return magnitude
 
+def align_images_using_ecc(reference_image, target_image, jpg=False):
+    """
+        Align two images using the Enhanced Correlation Coefficient (ECC) algorithm.
+        Parameters:
+            - reference_image: The reference image to align to.
+            - target_image: The target image to be aligned.
+            - jpg: Boolean indicating if the target image is a JPG file.
+        Returns:
+            - aligned_image: The aligned target image as a NumPy array.
+    """
+    # JPG images do not have the same exif data as the reference TIFF images,
+    # therefore they need a different treatment
+    if jpg:
+        # save colored jpg
+        colored_jpg = target_image
+        # create temporary greyscale img
+        target_image = cv2.cvtColor(target_image, cv2.COLOR_BGR2GRAY) 
+    
+    # smooth the images
+    reference_image_smoothed = _smooth_image(reference_image)
+    target_image_smoothed = _smooth_image(target_image)
+
+    # apply edge detection
+    base_edges = _edge_detection(reference_image_smoothed)
+    target_edges = _edge_detection(target_image_smoothed)
+
+    # convert images to float32 for ECC algorithm
+    base_edges = base_edges.astype(np.float32)
+    target_edges = target_edges.astype(np.float32)
+    
+    # define the motion model
+    warp_mode = cv2.MOTION_HOMOGRAPHY
+    warp_matrix = np.eye(3, 3, dtype=np.float32)
+
+    # set the number of iterations and termination criteria
+    if jpg:
+        # increase iterations for jpg images, beacause they went through lees processing
+        number_of_iterations = 500 
+    else:
+        number_of_iterations = 25
+    termination_eps = 1e-10
+
+    criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, number_of_iterations, termination_eps)
+
+
+    # apply the ECC algorithm to find the warp matrix
+    cc, warp_matrix = cv2.findTransformECC(base_edges, target_edges, warp_matrix, warp_mode, criteria)
+    
+    if jpg:
+        target_image = colored_jpg
+
+    # warp the target image to align with the base image
+    aligned_image = cv2.warpPerspective(target_image, warp_matrix, (reference_image.shape[1], reference_image.shape[0]), flags=cv2.INTER_LINEAR + cv2.WARP_INVERSE_MAP)
+    
+    return aligned_image
