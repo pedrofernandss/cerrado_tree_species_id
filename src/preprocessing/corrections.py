@@ -119,3 +119,17 @@ def _smooth_image(image, sigma=1):
     """
     return gaussian_filter(image, sigma=sigma)
 
+def _edge_detection(image):
+    """
+        Apply Sobel filter to detect edges in the image.
+        Parameters:
+            - image: The input image to be processed.
+        Returns:
+            - magnitude: The magnitude of the gradient, representing edge strength.
+    """
+
+    grad_x = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+    grad_y = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+    magnitude = cv2.magnitude(grad_x, grad_y)
+    return magnitude
+
