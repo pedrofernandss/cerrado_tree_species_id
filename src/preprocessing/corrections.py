@@ -106,3 +106,16 @@ def align_phase_rotation(new_img, infoDict):
   H = np.asarray([float(elem) for elem in infoDict['Calibrated H Matrix'].split(",")]).reshape(3,3)
   new_img = cv2.warpPerspective(new_img, H, (cols, rows))
   return new_img
+
+
+def _smooth_image(image, sigma=1):
+    """
+        Apply Gaussian smoothing to the image.
+        Parameters:
+            - image: The input image to be smoothed.
+            - sigma: Standard deviation for Gaussian kernel.
+        Returns:
+            - smoothed_image: The smoothed image as a NumPy array.
+    """
+    return gaussian_filter(image, sigma=sigma)
+
