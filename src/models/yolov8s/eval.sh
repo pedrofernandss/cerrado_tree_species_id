@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolo11s"
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolov8s"
 mkdir -p "$LOG_DIR"
 
 DATASET_BASE_NO_AUG="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/datasets_no_augmentation"
@@ -22,7 +22,7 @@ for ((i=0; i<${#datasets[@]}; i+=2)); do
     TAG="${datasets[$i+1]}"
 
     YAML_NO_AUG="$DATASET_BASE_NO_AUG/$NAME/data.yaml"
-    MODEL_NO_AUG="../../../runs/yolo11s/no_augmentation/adjust/$NAME/weights/best.pt"
+    MODEL_NO_AUG="../../../runs/yolov8s/no_augmentation/$NAME/weights/best.pt"
     RUN_NAME_NO_AUG="test_no_augmented_$NAME"
 
     if [ -f "$MODEL_NO_AUG" ]; then
@@ -39,7 +39,7 @@ for ((i=0; i<${#datasets[@]}; i+=2)); do
     fi
 
     # YAML_AUG="$DATASET_BASE_AUG/$NAME/data.yaml"
-    # MODEL_AUG="../../../runs/yolo11s/augmented/$NAME/weights/best.pt"
+    # MODEL_AUG="../../../runs/yolov8s/augmented/$NAME/weights/best.pt"
     # RUN_NAME_AUG="test_augmented_$NAME"
 
     # if [ -f "$MODEL_AUG" ]; then
@@ -55,8 +55,8 @@ for ((i=0; i<${#datasets[@]}; i+=2)); do
     #     echo "ERRO: Modelo Augmented não encontrado para $NAME em $MODEL_AUG"
     # fi
 
-    echo "Progresso: $NAME finalizado (Baseline & Augmented)."
-    sleep 10 
+    # echo "Progresso: $NAME finalizado (Baseline & Augmented)."
+    # sleep 10 
 done
 
 echo "Processo de avaliação finalizado! Confira os resultados no MLflow."

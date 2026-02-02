@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolov8n"
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolo11n"
 mkdir -p "$LOG_DIR"
 
 DATASET_BASE_NO_AUG="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/datasets_no_augmentation"
@@ -22,7 +22,7 @@ for ((i=0; i<${#datasets[@]}; i+=2)); do
     TAG="${datasets[$i+1]}"
 
     YAML_NO_AUG="$DATASET_BASE_NO_AUG/$NAME/data.yaml"
-    MODEL_NO_AUG="../../../runs/yolov8n/no_augmentation/$NAME/weights/best.pt"
+    MODEL_NO_AUG="../../../runs/yolo11n/no_augmentation/$NAME/weights/best.pt"
     RUN_NAME_NO_AUG="test_no_augmented_$NAME"
 
     if [ -f "$MODEL_NO_AUG" ]; then
@@ -38,22 +38,22 @@ for ((i=0; i<${#datasets[@]}; i+=2)); do
         echo "ERRO: Modelo não encontrado para $NAME em $MODEL_NO_AUG"
     fi
 
-    YAML_AUG="$DATASET_BASE_AUG/$NAME/data.yaml"
-    MODEL_AUG="../../../runs/yolov8n/augmented/$NAME/weights/best.pt"
-    RUN_NAME_AUG="test_augmented_$NAME"
+    # YAML_AUG="$DATASET_BASE_AUG/$NAME/data.yaml"
+    # MODEL_AUG="../../../runs/yolo11n/augmented/$NAME/weights/best.pt"
+    # RUN_NAME_AUG="test_augmented_$NAME"
 
-    if [ -f "$MODEL_AUG" ]; then
-        echo "Lançando Teste Augmented: $NAME"
-        find "$DATASET_BASE_AUG/$NAME" -name "*.cache" -delete
-        python3 eval.py \
-            --model "$MODEL_AUG" \
-            --data "$YAML_AUG" \
-            --name "$RUN_NAME_AUG" \
-            --aug "yes" \
-            --tags "$TAG" > "$LOG_DIR/$RUN_NAME_AUG.log" 2>&1
-    else
-        echo "ERRO: Modelo Augmented não encontrado para $NAME em $MODEL_AUG"
-    fi
+    # if [ -f "$MODEL_AUG" ]; then
+    #     echo "Lançando Teste Augmented: $NAME"
+    #     find "$DATASET_BASE_AUG/$NAME" -name "*.cache" -delete
+    #     python3 eval.py \
+    #         --model "$MODEL_AUG" \
+    #         --data "$YAML_AUG" \
+    #         --name "$RUN_NAME_AUG" \
+    #         --aug "yes" \
+    #         --tags "$TAG" > "$LOG_DIR/$RUN_NAME_AUG.log" 2>&1
+    # else
+    #     echo "ERRO: Modelo Augmented não encontrado para $NAME em $MODEL_AUG"
+    # fi
 
     echo "Progresso: $NAME finalizado (Baseline & Augmented)."
     sleep 10 
