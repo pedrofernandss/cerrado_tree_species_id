@@ -1,13 +1,13 @@
-# 🌳 Cerrado Tree Identification
+# 🌳 Cerrado Tree Species Identificator
 
-Welcome to the **cerrado-tree-id** project!
+Welcome to the **Cerrado Tree Species Identificator** project!
 
 This repository introduces a novel **image preprocessing pipeline** that fuses multispectral images, tailored for native species of the Cerrado biome.  
-Using our local dataset, the models provided in `detect/models` can detect **over 16 different species** — feel free to use them as you like!
+Using our local dataset, the models provided in `models` can detect **over 18 different species**. Feel free to use them as you like!
 
 Our pipeline delivers a **4.2% improvement in detection accuracy** compared to state-of-the-art RGB-only approaches.
 
-> ⚠️ **Note:** Running the preprocessing notebooks requires a machine with a **GPU** for efficient processing.
+> **Note:** Running the preprocessing notebooks requires a machine with a **GPU** for efficient processing.
 
 ---
 
@@ -95,52 +95,78 @@ After a functional GPU and an appropriate environment are set up, you're ready t
 
 ### Step 1: Preprocess images
 
-Open and run the notebook:
+Open and run the python script:
 
 ```
-./preprocessing/preprocess_imgs.ipynb
+./src/preprocessing/main.py
 ```
 
-🖼️ Preprocessed images will be saved to:
+Preprocessed images will be saved to:
 
 ```
-./preprocessing/preprocessed-imgs
+{path-to-dataset}/{specified-date}
 ```
 
 ### Step 2: Fuse multispectral channels
 
-Open and run the notebook:
+Open and run the python script:
 
 ```
-./preprocessing/fuse_imgs.ipynb
+./src/image_fusion/main.py
 ```
 
-🔀 Fused images will be saved to:
+Fused images will be saved to:
 
 ```
-./preprocessing/fused-imgs
+{path-to-dataset}/{specified-date}/fused-imgs
 ```
 
-🖼️ Corresponding RGB images are also stored in:
+### Step 3: Generate the vegetation indexes and the combined images
+
+Open and run the python script:
 
 ```
-./preprocessing/rgb-imgs
+./src/vegetation_index/main.py
 ```
 
-### Step 3: Run detection on fused images
-
-Open and run the notebook:
+The vegetation indexes images will be saved to:
 
 ```
-./detect/demo.ipynb
+{path-to-dataset}/{specified-date}/ndre
+{path-to-dataset}/{specified-date}/ndvi
 ```
 
-📁 Detection results will be saved to:
+The vegetation indexes images combined/stacked with the RGB and Fused images will be saved to:
 
 ```
-./runs/detect/predict
+{path-to-dataset}/{specified-date}/fused-ndre
+{path-to-dataset}/{specified-date}/fused-ndvi
+
+{path-to-dataset}/{specified-date}/rgb-ndre
+{path-to-dataset}/{specified-date}/rgb-ndvi
 ```
+
+
+### Step 4: Train the models
+
+The models are trained in batch for all the image types and variation availabe. For train a specific model, go to `src/models/{selected-model}/train` and execute: 
+
+```
+train.sh
+```
+
+Artifacts generated during trainig such as images, weights, charts and etc. will be saved in `runs/{model-name}/no-augmentation/{image-type}`
+
+### Step 5: Evaluate training
+
+To evaluate the executed trainig in the test set, go to `src/models/{selected-model}/eval` and execute:
+
+```
+eval.sh
+```
+
+The artifacts generated such as images and charts will be saved in `reports/{model-name}/test_no_augmented_{image-type}`
 
 ---
 
-✅ That’s it! You're ready to explore tree species detection in the Cerrado using fused multispectral data.
+That’s it! You're ready to explore tree species detection in the Cerrado using fused multispectral data.
