@@ -13,8 +13,6 @@ from ultralytics import YOLO
 def train_and_validate():
     parser = argparse.ArgumentParser(description="YOLO Training & Validation Pipeline")
     parser.add_argument('--data', type=str, required=True, help='Path to data.yaml')
-    parser.add_argument('--name', type=str, required=True, help='Unique run name')
-    parser.add_argument('--tags', type=str, help='Tags')
     parser.add_argument('--patience', type=int, default=30, help='Early stopping')
     parser.add_argument('--epochs', type=int, default=150)
     parser.add_argument('--batch', type=int, default=8)
@@ -33,7 +31,6 @@ def train_and_validate():
         patience=args.patience,
         batch=args.batch,
         imgsz=args.imgsz,
-        name=args.name,
         exist_ok=True,
         save=True,     
         plots=True,
