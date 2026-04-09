@@ -4,18 +4,18 @@ import os
 from pathlib import Path
 from tqdm import tqdm
 
-base_path = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/datasets_augmented/")
+base_path = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/")
 total_images = 0
 
 transform = A.Compose(
     [
-        A.RandomCrop(width=500, height=500, p=1.0), 
         A.HorizontalFlip(p=0.5),
-        A.RandomBrightnessContrast(p=0.5),
+        A.ShiftScaleRotate(shift_limit=0.0, scale_limit=(0.0, 0.15), rotate_limit=15, p=1.0, border_mode=cv2.BORDER_REFLECT),
     ],
     bbox_params=A.BboxParams(
         format='yolo',
-        min_area=2500, 
+        clip=True,
+        min_area=100,
         min_visibility=0.3,
         label_fields=['class_labels']
     )
