@@ -23,5 +23,4 @@ def gram_schmidt_fusion_rgb(multispectral, pseudo_rgb, alpha=2):
     ratio = (alpha * intensity_ms) / (intensity_rgb + 1e-8)  # avoid division by zero
 
     fused = pseudo_rgb * ratio
-    fused = np.clip(fused, 0, 255).astype(np.uint8)
-    return fused
+    return fused.astype(np.float32)
