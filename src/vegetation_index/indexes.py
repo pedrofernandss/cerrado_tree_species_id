@@ -12,7 +12,10 @@ def calculate_ndvi(red_img_path: str, nir_img_path: str):
     ndvi = np.divide(numerator, denominator, out=np.zeros_like(
         numerator), where=denominator != 0)
 
-    return ndvi.astype(np.float32)
+    ndvi_norm = (ndvi + 1) / 2
+    img_uint8 = (ndvi_norm * 255).astype(np.uint8)
+
+    return img_uint8
 
 def calculate_ndre(re_img_path: str, nir_img_path: str):
 
@@ -25,4 +28,7 @@ def calculate_ndre(re_img_path: str, nir_img_path: str):
     ndre = np.divide(numerator, denominator, out=np.zeros_like(
         numerator), where=denominator != 0)
 
-    return ndre.astype(np.float32)
+    ndre_norm = (ndre + 1) / 2
+    img_uint8 = (ndre_norm * 255).astype(np.uint8)
+
+    return img_uint8
