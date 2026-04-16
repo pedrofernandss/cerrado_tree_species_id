@@ -15,7 +15,7 @@ dates_list = ["2024-08-28", "2025-01-27-voo1", "2025-01-27-voo2", "2025-01-28", 
 
 images_type = ["fused-imgs", "fused-ndre-imgs", "fused-ndvi-imgs", "ndre-imgs", "ndvi-imgs", "rgb-ndre-imgs", "rgb-ndvi-imgs"]
 
-path_labels_source = base_dataset / "fotos-rotuladas/rgb/labels"
+path_labels_source = base_dataset / "dataset/rgb/labels"
 
 labels_list = list(path_labels_source.glob("*.txt"))
 dict_labels = {}

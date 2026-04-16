@@ -15,7 +15,7 @@ PRIMARY_CHANNEL = "rgb"
 CHANNEL_FILENAME_MAP = {
     "ndre":      ("_NDRE",       ".TIF"),
     "ndvi":      ("_NDVI",       ".TIF"),
-    "fused":     ("_D_FUSED",    ".TIF"),
+    "fused":     ("_D_FUSED",    ".jpg"),
     "fused-ndre": ("_FUSED_NDRE", ".TIF"),
     "fused-ndvi": ("_FUSED_NDVI", ".TIF"),
     "rgb-ndre":  ("_RGB_NDRE",   ".TIF"),
