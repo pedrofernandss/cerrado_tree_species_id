@@ -24,10 +24,7 @@ def evaluate():
     model.val(
         data=args.data,
         split='test',
-        imgsz=1024,
-        batch=8,
         project=reports_dir,
-        name=args.name,
         save=True,
         plots=True
     )
