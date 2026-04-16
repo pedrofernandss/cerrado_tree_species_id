@@ -33,7 +33,7 @@ def calculate_indexes():
         for path in cur_imgs:
             if path.endswith('_D.JPG'):
                 rgb_path = path     
-            elif '_D_FUSED.TIF' in path:
+            elif '_D_FUSED.JPG' in path:
                 fused_path = path
             elif '_MS_NIR.TIF' in path:
                 nir_path = path
@@ -82,7 +82,7 @@ def calculate_indexes():
         tiff.imwrite(fused_ndre_output_dir / f"{new_stem_fused_ndre}.TIF", stack_fused_ndre)
 
 if __name__ == "__main__":
-    batch_path = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/2025-06-16")
+    batch_path = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/2024-08-28")
 
     ndvi_output_dir = batch_path / "ndvi-imgs"
     ndre_output_dir = batch_path / "ndre-imgs"
