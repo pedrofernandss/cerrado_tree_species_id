@@ -7,8 +7,19 @@ from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
 def extract_core_id(filename):
     """
     Extract image identifier (ex: 'processed-DJI_20240828141944_0061').
+    Funciona com nomes: 
+    - processed-DJI_20240828141944_0061_D.JPG
+    - processed-DJI_20240828141944_0061_RGB_NDVI.TIF
+    - processed-DJI_20240828141944_0061_NDVI.TIF
     """
-    match = re.search(r"(processed-DJI_\d+_\d+)", filename)
+    name = filename.split('.')[0]
+    
+    for suffix in ['_D_FUSED', '_RGB_NDVI', '_RGB_NDRE', '_FUSED_NDVI', '_FUSED_NDRE', '_NDVI', '_NDRE', '_D']:
+        if name.endswith(suffix):
+            name = name[:-len(suffix)]
+            break
+    
+    match = re.search(r"(processed-DJI_\d+_\d+)", name)
     if match:
         return match.group(1)
     return None
@@ -48,9 +59,20 @@ def process_dataset(dataset_folder, split_ids, split_name):
 
         src_img = file_map[core_id]
         
-        src_lbl = src_lbl_folder / f"{src_img.stem}.txt"
+        src_lbl = None
+        for lbl_file in src_lbl_folder.glob(f"{core_id}*"):
+            if lbl_file.suffix == '.txt':
+                src_lbl = lbl_file
+                break
+        
+        if src_lbl is None or not src_lbl.exists():
+            master_lbl_folder = (dataset_folder.parent / "fused" / "labels")
+            for lbl_file in master_lbl_folder.glob(f"{core_id}*"):
+                if lbl_file.suffix == '.txt':
+                    src_lbl = lbl_file
+                    break
 
-        if src_lbl.exists():
+        if src_lbl and src_lbl.exists():
             shutil.copy(src_img, dst_split_img / src_img.name)
             shutil.copy(src_lbl, dst_split_lbl / src_lbl.name)
             count += 1
@@ -58,20 +80,25 @@ def process_dataset(dataset_folder, split_ids, split_name):
     return count
 
 if __name__ == "__main__":
-    base_root = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/fotos-rotuladas")
+    base_root = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset")
     out_base = Path("/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified")
 
-    num_classes = 20
+    num_classes = 16
 
-    val_ratio = 0.15
-    test_ratio = 0.15
+    val_ratio = 0.10
+    test_ratio = 0.10
 
+    dataset_types = [
+        "fused", "ndre", "ndvi", "rgb", 
+        "rgb-ndvi", "rgb-ndre", "fused-ndvi", "fused-ndre"
+    ]
+    
     available_datasets = [
-        d for d in base_root.iterdir()
-        if d.is_dir() and (d / "images").exists()
+        base_root / ds_type for ds_type in dataset_types
+        if (base_root / ds_type / "images").exists()
     ]
 
-    master_dataset = base_root / "ndvi"
+    master_dataset = base_root / "fused"
     ref_labels_dir = master_dataset / "labels"
 
     core_ids_list = []
@@ -116,12 +143,10 @@ if __name__ == "__main__":
 
     data_yaml_src = base_root / "data.yaml"
 
-    for ds in available_datasets:
-
+    for ds in available_datasets:        
         n_train = process_dataset(ds, train_ids, 'train')
         n_val = process_dataset(ds, val_ids, 'val')
         n_test = process_dataset(ds, test_ids, 'test')
-        
         dst_root = out_base / ds.name
         if data_yaml_src.exists():
             with open(data_yaml_src, 'r') as f:
@@ -141,5 +166,3 @@ if __name__ == "__main__":
             dst_yaml = dst_root / "data.yaml"
             with open(dst_yaml, 'w') as f:
                 f.write(content)
-
-    print("\nDone! All the image type was stratified!")
