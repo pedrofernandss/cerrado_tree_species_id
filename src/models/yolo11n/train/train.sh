@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/yolo11n"
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/train/yolo11n"
 mkdir -p "$LOG_DIR"
 
 datasets=(
@@ -17,7 +17,6 @@ datasets=(
 for ((i=0; i<${#datasets[@]}; i+=2)); do
     NAME="${datasets[$i]}"
     YAML="${datasets[$i+1]}"
-    TAGS="${datasets[$i+2]}"
 
     echo "----------------------------------------------------------"
     echo "Iniciando treinamendo do $NAME com o arquivo $YAML"

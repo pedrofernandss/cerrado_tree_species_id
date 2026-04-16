@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/yolo11s/"
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/train/yolo11s"
 mkdir -p "$LOG_DIR"
 
 datasets=(
