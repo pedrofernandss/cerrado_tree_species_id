@@ -13,11 +13,7 @@ from ultralytics import YOLO
 def train_and_validate():
     parser = argparse.ArgumentParser(description="YOLO Training & Validation Pipeline")
     parser.add_argument('--data', type=str, required=True, help='Path to data.yaml')
-    parser.add_argument('--patience', type=int, default=50, help='Early stopping')
     parser.add_argument('--name', type=str, required=True, help='Unique run name')
-    parser.add_argument('--epochs', type=int, default=150)
-    parser.add_argument('--batch', type=int, default=16)
-    parser.add_argument('--imgsz', type=int, default=1024)
     args = parser.parse_args()
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -28,15 +24,11 @@ def train_and_validate():
     
     model.train(
         data=args.data,
-        epochs=args.epochs,
-        patience=args.patience,
-        batch=args.batch,
-        imgsz=args.imgsz,
         name=args.name,
         exist_ok=True,
         save=True,     
         plots=True,
-        device=0, 
+        device=1, 
         project=os.path.join(project_root, "runs/yolo11n"),
 
         # Deactivate online augmentation maked by Yolo
