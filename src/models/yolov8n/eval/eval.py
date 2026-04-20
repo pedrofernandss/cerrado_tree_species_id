@@ -10,8 +10,8 @@ os.environ["ULTRALYTICS_MLFLOW"] = "True"
 def evaluate():
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(current_dir, "../../../"))
-    reports_dir = os.path.join(project_root, 'reports', 'evaluations')
+    project_root = os.path.abspath(os.path.join(current_dir, "../../../../"))
+    reports_dir = os.path.join(project_root, 'reports', 'evaluations', 'yolo8n')
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, required=True, help='Path for best.pt')
