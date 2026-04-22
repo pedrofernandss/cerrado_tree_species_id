@@ -1,26 +1,26 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolo11s"
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations_test/yolo11s"
 mkdir -p "$LOG_DIR"
 
-DATASET="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified"
+DATASET="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited"
 
 datasets=(
     "fused" 
-    "fused-ndre"
-    "fused-ndvi" 
-    "ndre" 
-    "ndvi" 
+    # "fused-ndre"
+    # "fused-ndvi" 
+    # "ndre" 
+    # "ndvi" 
     "rgb" 
-    "rgb-ndre" 
-    "rgb-ndvi" 
+    # "rgb-ndre" 
+    # "rgb-ndvi" 
 )
 
 for ((i=0; i<${#datasets[@]}; i+=1)); do
     NAME="${datasets[$i]}"
 
     YAML="$DATASET/$NAME/data.yaml"
-    MODEL="../../../../runs/yolo11s/$NAME/weights/best.pt"
+    MODEL="../../../../runs_test/yolo11s/$NAME/weights/best.pt"
     RUN_NAME="test_$NAME"
 
     if [ -f "$MODEL" ]; then

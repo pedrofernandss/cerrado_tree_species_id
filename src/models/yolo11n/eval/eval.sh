@@ -3,7 +3,7 @@
 LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolo11n"
 mkdir -p "$LOG_DIR"
 
-DATASET="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified"
+DATASET="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited"
 
 datasets=(
     "fused" 
