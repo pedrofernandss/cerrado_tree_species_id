@@ -22,6 +22,8 @@ def evaluate():
     model.val(
         data=args.data,
         split='test',
+        task='detect',
+        imgsz=640,
         project=reports_dir,
         save=True,
         plots=True
