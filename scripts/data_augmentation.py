@@ -8,14 +8,14 @@ from pathlib import Path
 from tqdm import tqdm
 
 BASE_PATH = Path(
-    "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/")
+    "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/")
 
-PRIMARY_CHANNEL = "rgb"
+PRIMARY_CHANNEL = "fused"
 
 CHANNEL_FILENAME_MAP = {
     "ndre":      ("_NDRE",       ".TIF"),
     "ndvi":      ("_NDVI",       ".TIF"),
-    "fused":     ("_D_FUSED",    ".jpg"),
+    "rgb":     ("_D",    ".JPG"),
     "fused-ndre": ("_FUSED_NDRE", ".TIF"),
     "fused-ndvi": ("_FUSED_NDVI", ".TIF"),
     "rgb-ndre":  ("_RGB_NDRE",   ".TIF"),
@@ -48,8 +48,8 @@ transform = A.ReplayCompose(
     )
 )
 
-def extract_base_id(rgb_stem):
-    return re.sub(r'_D$', '', rgb_stem)
+def extract_base_id(fused_stem):
+    return re.sub(r'_D_FUSED$', '', fused_stem)
 
 
 def clamp_boxes(boxes, class_labels):
@@ -170,12 +170,12 @@ for img_idx, img_path in enumerate(tqdm(image_paths)):
                     f"  Warning: no valid aug found for {img_path.name} aug{aug_i}, skipping.")
                 continue
 
-            new_rgb_stem = f"{img_path.stem}_aug{aug_i}"
+            new_fused_stem = f"{img_path.stem}_aug{aug_i}"
 
             save_image(primary_images_dir /
-                       f"{new_rgb_stem}{img_path.suffix}", result['image'])
+                       f"{new_fused_stem}{img_path.suffix}", result['image'])
             save_yolo_label(primary_labels_dir /
-                            f"{new_rgb_stem}.txt", aug_boxes, aug_labels)
+                            f"{new_fused_stem}.txt", aug_boxes, aug_labels)
 
             for channel, (ch_suffix, ch_ext) in CHANNEL_FILENAME_MAP.items():
                 channel_images_dir = BASE_PATH / channel / "train" / "images"
