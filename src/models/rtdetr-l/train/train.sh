@@ -4,14 +4,14 @@ LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/train/rt-detr-l"
 mkdir -p "$LOG_DIR"
 
 datasets=(
-    "fused" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/fused/data.yaml" 
-    "fused-ndre" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/fused-ndre/data.yaml" 
-    "fused-ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/fused-ndvi/data.yaml" 
-    "ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/ndre/data.yaml" 
-    "ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/ndvi/data.yaml" 
-    "rgb"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/rgb/data.yaml" 
-    "rgb-ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/rgb-ndre/data.yaml"
-    "rgb-ndvi" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_stratified/rgb-ndvi/data.yaml" 
+    "fused" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/fused/data.yaml" 
+    "fused-ndre" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/fused-ndre/data.yaml" 
+    "fused-ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/fused-ndvi/data.yaml" 
+    "ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndre/data.yaml" 
+    "ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndvi/data.yaml" 
+    "rgb"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/rgb/data.yaml" 
+    "rgb-ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/rgb-ndre/data.yaml"
+    "rgb-ndvi" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/rgb-ndvi/data.yaml" 
 )
 
 for ((i=0; i<${#datasets[@]}; i+=2)); do
