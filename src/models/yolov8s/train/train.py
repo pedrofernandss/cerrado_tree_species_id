@@ -26,10 +26,16 @@ def train_and_validate():
     model.train(
         data=args.data,
         name=args.name,
+        task='detect',
         exist_ok=True,
         save=True,     
         plots=True,
         device=1,
+        epochs=100,
+        batch=12,
+        imgsz=640,
+        pretrained=False,
+        seed=3,
         project=os.path.join(project_root, "runs/yolov8s")      
     )
 
