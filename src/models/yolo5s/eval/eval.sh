@@ -1,40 +1,31 @@
 #!/bin/bash
 
-LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/yolo5s"
+SEED=${1:-1}
+
+LOG_DIR="/mnt/sdb-seagate/graduacao/logs/ana_pedro/evaluations/seed${SEED}/yolov5s"
 mkdir -p "$LOG_DIR"
 
+PYTHON="/mnt/sdb-seagate/graduacao/home/ana_pedro/projetos/cerrado_tree_identifier/.venv/bin/python3"
 DATASET="/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited"
+RUNS="/mnt/sdb-seagate/graduacao/home/ana_pedro/projetos/cerrado_tree_identifier/runs"
 
-datasets=(
-    "fused" 
-    "fused-ndre"
-    "fused-ndvi" 
-    "ndre" 
-    "ndvi" 
-    "rgb" 
-    "rgb-ndre" 
-    "rgb-ndvi" 
-)
+cd /mnt/sdb-seagate/graduacao/home/ana_pedro/projetos/cerrado_tree_identifier/src/models/yolo5s/eval/
 
-for ((i=0; i<${#datasets[@]}; i+=1)); do
-    NAME="${datasets[$i]}"
+datasets=("fused" "rgb" "ndre" "ndvi")
 
+for NAME in "${datasets[@]}"; do
     YAML="$DATASET/$NAME/data.yaml"
-    MODEL="../../../../runs/yolov5s/$NAME/weights/best.pt"
-    RUN_NAME="test_$NAME"
+    MODEL="$RUNS/seed${SEED}/yolov5s/${NAME}_seed${SEED}/weights/best.pt"
 
     if [ -f "$MODEL" ]; then
-        echo "Realizando teste : $NAME"
+        echo "Avaliando: $NAME | seed: $SEED"
         find "$DATASET/$NAME" -name "*.cache" -delete
-        python3 eval.py \
-            --model "$MODEL" \
-            --data "$YAML" > "$LOG_DIR/$RUN_NAME.log" 2>&1
+        $PYTHON eval.py --model "$MODEL" --data "$YAML" --seed "$SEED" --model_name "yolov5s" > "$LOG_DIR/$NAME.log" 2>&1
+        echo "Finalizado: $NAME"
     else
-        echo "ERRO: Modelo não encontrado para $NAME em $MODEL"
+        echo "ERRO: Modelo não encontrado: $MODEL"
     fi
-
-    echo "Progresso: $NAME finalizado."
-    sleep 10 
+    sleep 5
 done
 
-echo "Processo de avaliação finalizado!"
+echo "yolov5s seed=$SEED avaliação concluída!"
