@@ -21,7 +21,7 @@ for NAME in "${datasets[@]}"; do
         echo "Avaliando: $NAME | seed: $SEED"
         find "$DATASET/$NAME" -name "*.cache" -delete
         $PYTHON eval.py --model "$MODEL" --data "$YAML" --seed "$SEED" --model_name "yolov8n" > "$LOG_DIR/$NAME.log" 2>&1
-        echo "Finalizado: $NAME"
+        echo "Finishing: $NAME"
     else
         echo "ERRO: Modelo não encontrado: $MODEL"
     fi
