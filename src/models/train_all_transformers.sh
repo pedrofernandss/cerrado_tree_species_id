@@ -2,15 +2,6 @@
 
 BASE="/mnt/sdb-seagate/graduacao/home/ana_pedro/projetos/cerrado_tree_identifier/src/models"
 
-MODELOS=(
-    "yolo5n"
-    "yolo5s"
-    "yolov8n"
-    "yolov8s"
-    "yolo11n"
-    "yolo11s"
-)
-
 SEEDS=(1 2 3)
 
 for SEED in "${SEEDS[@]}"; do
@@ -19,18 +10,16 @@ for SEED in "${SEEDS[@]}"; do
     echo "Time: $(date '+%Y-%m-%d %H:%M:%S')"
     echo "=========================================="
 
-    for MODELO in "${MODELOS[@]}"; do
-        echo "------------------------------------------"
-        echo "Starting: $MODELO | seed: $SEED"
-        echo "Time: $(date '+%Y-%m-%d %H:%M:%S')"
-        echo "------------------------------------------"
+    echo "--- rtdetr-l | seed: $SEED ---"
+    bash "$BASE/rtdetr-l/train/train.sh" "$SEED"
+    echo "Finising rtdetr-l | $(date '+%Y-%m-%d %H:%M:%S')"
+    sleep 30
 
-        bash "$BASE/$MODELO/train/train.sh" "$SEED"
+    echo "--- rfdetr-nano | seed: $SEED ---"
+    bash "$BASE/rfdetr-nano/train/train.sh" "$SEED"
+    echo "Finising rfdetr-nano | $(date '+%Y-%m-%d %H:%M:%S')"
+    sleep 15
 
-        echo "Finishing: $MODELO | seed: $SEED"
-        echo "Time: $(date '+%Y-%m-%d %H:%M:%S')"
-        sleep 15
-    done
 done
 
 echo "=========================================="
