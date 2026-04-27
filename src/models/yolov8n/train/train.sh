@@ -19,10 +19,10 @@ datasets=(
 for ((i=0; i<${#datasets[@]}; i+=2)); do
     NAME="${datasets[$i]}"
     YAML="${datasets[$i+1]}"
-    echo "Iniciando: $NAME | seed: $SEED"
+    echo "Starting: $NAME | seed: $SEED"
     $PYTHON train.py --data "$YAML" --name "${NAME}_seed${SEED}" --seed "$SEED" > "$LOG_DIR/$NAME.log" 2>&1
-    echo "Finalizado: $NAME"
+    echo "Finishing: $NAME"
     sleep 10
 done
 
-echo "yolo8n seed=$SEED concluído!"
+echo "yolo8n seed=$SEED completed!"
