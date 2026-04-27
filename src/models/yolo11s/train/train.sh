@@ -12,17 +12,17 @@ cd /mnt/sdb-seagate/graduacao/home/ana_pedro/projetos/cerrado_tree_identifier/sr
 datasets=(
     "fused" "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/fused/data.yaml"
     "rgb"   "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/rgb/data.yaml"
-    "ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndre/data.yaml"
-    "ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndvi/data.yaml"
+    # "ndre"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndre/data.yaml"
+    # "ndvi"  "/mnt/sdb-seagate/graduacao/datasets/projeto_cerrado/dataset_splited/ndvi/data.yaml"
 )
 
 for ((i=0; i<${#datasets[@]}; i+=2)); do
     NAME="${datasets[$i]}"
     YAML="${datasets[$i+1]}"
-    echo "Iniciando: $NAME | seed: $SEED"
+    echo "Starting: $NAME | seed: $SEED"
     $PYTHON train.py --data "$YAML" --name "${NAME}_seed${SEED}" --seed "$SEED" > "$LOG_DIR/$NAME.log" 2>&1
-    echo "Finalizado: $NAME"
+    echo "Finishing: $NAME"
     sleep 10
 done
 
-echo "yolo11s seed=$SEED concluído!"
+echo "yolo11s seed=$SEED completed!"
